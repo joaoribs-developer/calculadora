@@ -17,51 +17,80 @@ public class HelloController {
         double multiplicacao;
         double divisao;
         String decisao;
-    try {
-        System.out.print("Digite o primeiro Numero: ");
-        n1 = entrada.nextDouble();
+        try {
+            System.out.print("Digite a operacoo desejada(\"+\",\"-\",\"*\",\"/\", \"media\"): ");
+            operacao = entrada.next();
+
+            if (Objects.equals(operacao, "media")){
+                ArrayList<Double> valoresRecebidos = new ArrayList<>();
+                int elementos;
+                System.out.print("Digite o numero de elementos: ");
+                elementos = entrada.nextInt();
+
+                if (elementos > 15){
+                    System.out.println("O valor maximo sao 15 elementos");
+                    System.out.print("Digite o novamente o numero de elementos: ");
+                    elementos = entrada.nextInt();
+                }
+
+                for (int i = 0; i < elementos; i++){
+                    System.out.print("Digite o valor: ");
+                    double value = entrada.nextDouble();
+                    valoresRecebidos.add(value);
+                }
+                double media = valoresRecebidos.stream().mapToDouble(Double::doubleValue).average().orElse(0.0);
+                DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+                decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+                System.out.println("O valor da media eh: "+decimalFormat.format(media));
+                System.out.println(("-").repeat(10));
+                System.out.println("Para realizar outra operacao, insira: SIM");
+                decisao = entrada.next();
+                if ((Objects.equals(decisao, "SIM") || Objects.equals(decisao, "sim"))) {
+                    funct();
+                }
+            }
+            System.out.print("Digite o primeiro Numero: ");
+            n1 = entrada.nextDouble();
 
             System.out.print("Digite o segundo Numero: ");
             n2 = entrada.nextDouble();
 
-        System.out.print("Digite a operacoo desejada(\"+\",\"-\",\"*\",\"/\"): ");
-        operacao = entrada.next();
 
-        switch (operacao) {
-            case "+" -> {
-                soma = n1 + n2;
-                System.out.println("O resultado da soma eh: " + soma);
+            switch (operacao) {
+                case "+" -> {
+                    soma = n1 + n2;
+                    System.out.println("O resultado da soma eh: " + soma);
+                }
+                case "-" -> {
+                    subtracao = n1 - n2;
+                    System.out.println("O resultado da subtracao eh: " + subtracao);
+                }
+                case "*" -> {
+                    multiplicacao = n1 * n2;
+                    System.out.println("O resultado da multiplicacao eh: " + multiplicacao);
+                }
+                case "/" -> {
+                    divisao = n1 / n2;
+                    System.out.println("O resultado da divisao eh: " + divisao);
+                }
+                default -> System.out.println("Esta operação nao eh valida");
             }
-            case "-" -> {
-                subtracao = n1 - n2;
-                System.out.println("O resultado da subtracao eh: " + subtracao);
-            }
-            case "*" -> {
-                multiplicacao = n1 * n2;
-                System.out.println("O resultado da multiplicacao eh: " + multiplicacao);
-            }
-            case "/" -> {
-                divisao = n1 / n2;
-                System.out.println("O resultado da divisao eh: " + divisao);
-            }
-            default -> System.out.println("Esta operação nao eh valida");
-        }
 
 
-        System.out.println("Deseja realizar outra operacao? Insira: SIM ");
-        decisao = entrada.next();
-        if ((Objects.equals(decisao, "SIM") || Objects.equals(decisao, "sim"))) {
+            System.out.println("Para realizar outra operacao, insira: SIM");
+            decisao = entrada.next();
+            if ((Objects.equals(decisao, "SIM") || Objects.equals(decisao, "sim"))) {
+                funct();
+            }
+        }catch (Exception e){
+            System.out.println("Valores inseridos sao envalidos, Erro: "+e);
             funct();
         }
-    }catch (Exception e){
-        System.out.println("Valores inseridos sao envalidos, Erro: "+e);
+
+    }
+    public static void main (String[]args){
         funct();
     }
-
-    }
-        public static void main (String[]args){
-            funct();
-        }
 
 
 }
