@@ -25,14 +25,18 @@ public class MainClass {
             System.out.println("Para acessar a calculadora insira \"calc\" !");
             System.out.println("Para acessar o banco de dados insira \"banco\" !");
             decisao = entrada.next();
-            if (Objects.equals(decisao, "calc")){
-                new Calculadora().calculadora(this.operacaoRepository);
-            } else if (Objects.equals(decisao, "banco")) {
-                new Banco().banco(this.operacaoRepository);
-            }else {
+            if (!Objects.equals(decisao, "calc") && !Objects.equals(decisao, "banco")) {
                 System.out.print("O valor de entrada eh invalido, tente novamente");
                 inicio();
+                return;
             }
+
+            if (Objects.equals(decisao, "banco")) {
+                new Banco().banco(this.operacaoRepository);
+                return;
+            }
+            
+            new Calculadora().calculadora(this.operacaoRepository);
         }catch (Exception e){
             System.out.print("Erro:" +e);
         }
